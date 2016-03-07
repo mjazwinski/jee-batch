@@ -47,3 +47,9 @@ Temporary Items
 .apdisk
 *.project
 *.prefs
+*.component
+jee-batch-core/.classpath
+target/*
+jee-batch-core/target/*
+jee-batch-core/container/*
+jee-batch-core/.settings/org.eclipse.wst.common.project.facet.core.xml
