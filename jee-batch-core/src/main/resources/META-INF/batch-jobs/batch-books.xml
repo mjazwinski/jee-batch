@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jsl:job id="idvalue0" restartable="" version="1.0"
+	xmlns:jsl="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/jobXML_1_0.xsd ">
+	
+	<jsl:step id="move-file" next="resource-router">
+		<jsl:batchlet ref="initializeResourceImport" />
+	</jsl:step>
+	
+	<jsl:flow id="resource-router">
+	
+		<jsl:step id="resource-processor" next="path-decistion">
+			<jsl:chunk item-count="2">
+				<jsl:reader ref="knowledgeResourceReader" />
+	            <jsl:processor ref="knowledgeResourceProcessor" />
+				<jsl:writer ref="knowledgeResourceWriter" />
+			</jsl:chunk>
+		</jsl:step>
+		
+		<jsl:decision id="path-decision" ref="pathDecider">
+			<jsl:next on="STORE" to="store"/>
+			<jsl:next on="SAVE_BOOKMARK" to="bookmark"/>
+			<jsl:end on="NO_RESOURCES"/>
+		</jsl:decision>
+	
+		<jsl:step id="store">
+			<jsl:batchlet ref="knowledgeResourceStore"></jsl:batchlet>
+		</jsl:step>
+		
+		<jsl:step id="bookmark">
+			<jsl:batchlet ref="knowledgeBookmarkWriter"></jsl:batchlet>
+		</jsl:step>
+	</jsl:flow>
+	
+</jsl:job>
