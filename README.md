@@ -1,3 +1,3 @@
-# knowledge-planner
+# knowledge-planner - batch
 
-Initial commit for knowledge planner app and a Arquillian testing demo
+Batch Processing for Java Platform and Arquillian testing demo
