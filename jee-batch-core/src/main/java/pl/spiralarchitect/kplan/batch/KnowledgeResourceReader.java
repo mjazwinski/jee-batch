@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.Properties;
 
+import javax.batch.api.BatchProperty;
 import javax.batch.api.chunk.AbstractItemReader;
 import javax.batch.operations.JobOperator;
 import javax.batch.runtime.BatchRuntime;
@@ -19,6 +20,11 @@ public class KnowledgeResourceReader extends AbstractItemReader {
 
 	@Inject
 	private JobContext jobContext;
+	
+	@Inject
+	@BatchProperty(name="fileName")
+	private String fileName;
+	
 	private FileInputStream inputStream;
 	private Integer recordNumber = Integer.valueOf(0);
 	private BufferedReader br;
@@ -60,7 +66,7 @@ public class KnowledgeResourceReader extends AbstractItemReader {
 		Properties jobParameters = jobOperator.getParameters(jobContext.getExecutionId());
 		String resourceName = (String) jobParameters
 				.get(KnowledgeImportParamters.RESOURCE_TEMP_NAME.getParameterName());
-		return resourceName;
+		return resourceName + File.separator + fileName;
 	}
 
 	@Override

@@ -29,10 +29,12 @@ public class InitializeResourceImport extends AbstractBatchlet {
 		File[] filesToMove = importDir.listFiles();
 		File workDir = new File("./workDir");
 		if (filesToMove != null && filesToMove.length > 0) {
-			Path filePath = Paths.get(workDir.getCanonicalPath()).resolve(filesToMove[0].getName());
-			Files.move(Paths.get(filesToMove[0].getCanonicalPath()), filePath, StandardCopyOption.REPLACE_EXISTING);
-			jobParameters.setProperty(KnowledgeImportParamters.RESOURCE_TEMP_NAME.getParameterName(),
-					filePath.toFile().getAbsolutePath());
+			for (File file : filesToMove) {
+				Path filePath = Paths.get(workDir.getCanonicalPath()).resolve(file.getName());
+				Files.move(Paths.get(file.getCanonicalPath()), filePath, StandardCopyOption.REPLACE_EXISTING);
+				jobParameters.setProperty(KnowledgeImportParamters.RESOURCE_TEMP_NAME.getParameterName(),
+						workDir.getCanonicalPath());
+			}
 			return "IMPORT";
 		} else {
 			return "FAILED";

@@ -1,7 +1,7 @@
 package pl.spiralarchitect.kplan.batch;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -10,13 +10,13 @@ import javax.inject.Named;
 @ApplicationScoped
 public class KnowledgeResources {
 
-	private List<KnowledgeResource> resources = new ArrayList<>();
+	private Set<KnowledgeResource> resources = new HashSet<>();
 
 	public void addResource(KnowledgeResource resource) {
 		resources.add(resource);
 	}
 	
-	public List<KnowledgeResource> getResources() {
+	public Set<KnowledgeResource> getResources() {
 		return resources;
 	}
 	

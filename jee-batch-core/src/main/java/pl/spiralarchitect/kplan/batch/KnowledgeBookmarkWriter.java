@@ -1,6 +1,6 @@
 package pl.spiralarchitect.kplan.batch;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.batch.api.AbstractBatchlet;
 import javax.inject.Inject;
@@ -14,8 +14,7 @@ public class KnowledgeBookmarkWriter extends AbstractBatchlet {
 
 	@Override
 	public String process() throws Exception {
-		List<KnowledgeResource> resourcesList = resources.getResources();
-		System.out.println("------resourcesList> " + resourcesList.size());
+		Set<KnowledgeResource> resourcesList = resources.getResources();
 		for (KnowledgeResource resource : resourcesList) {
 			System.out.println("storing resource: " + resource);
 		}

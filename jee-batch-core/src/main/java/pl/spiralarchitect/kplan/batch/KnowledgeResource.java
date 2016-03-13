@@ -1,7 +1,13 @@
 package pl.spiralarchitect.kplan.batch;
 
-public class KnowledgeResource {
+import java.io.Serializable;
 
+public class KnowledgeResource implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 131234253L;
 	private String title;
 	private String published;
 
@@ -12,6 +18,9 @@ public class KnowledgeResource {
 
 	public static Object fromString(String resourceAsString) {
 		String[] resourceFields = resourceAsString.split(";");
+		if (resourceFields.length < 2) {
+			throw new InvalidResourceFormatException();
+		}
 		String rTitle = resourceFields[0].split(":")[1];
 		String rPublished = resourceFields[1].split(":")[1];
 		return new KnowledgeResource(rTitle, rPublished);

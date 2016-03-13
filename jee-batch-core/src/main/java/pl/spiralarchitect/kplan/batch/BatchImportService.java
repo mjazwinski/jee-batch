@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -25,15 +26,17 @@ public class BatchImportService {
 	public void triggerImport() {
 		ensureDirExists("workDir");
 		File resourcesDir = ensureDirExists("import");
-		File articlesFile = new File("src/main/resources/META-INF/articles.txt");
-		Path source = Paths.get(articlesFile.getAbsolutePath());
-		try {
-			Files.copy(source, Paths.get(resourcesDir.getAbsolutePath()).resolve("articles.txt"), StandardCopyOption.REPLACE_EXISTING);
-			startBatch(resourcesDir);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("Failed to start batch: " + e.getMessage());
-		}
+		Arrays.stream(new String[]{"articles1.txt","articles2.txt"}).forEach(fileName -> {
+			File articlesFile = new File("src/main/resources/META-INF/" + fileName);
+			Path source = Paths.get(articlesFile.getAbsolutePath());
+			try {
+				Files.copy(source, Paths.get(resourcesDir.getAbsolutePath()).resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.err.println("Failed to start batch: " + e.getMessage());
+			}
+		});
+		startBatch(resourcesDir);
 	}
 
 	private File ensureDirExists(String dirName) {
